@@ -29,3 +29,31 @@ TEST(TicTacToeBoardTest, checkWinner)
   }
   ASSERT_TRUE(check);
 }
+TEST(TicTacToeBoardTest, checkClearBoard)
+{ 
+  TicTacToeBoard TTT;
+  bool check=true;
+  TTT.clearBoard();
+  for(int i=0;i<3;i++) {
+    for(int j=0;j<3;j++) {
+      if(TTT.getPiece(i,j)!=' ') {
+        check=false;
+      }    
+    }
+  }
+  ASSERT_TRUE(check);
+}
+
+TEST(TicTacToeBoardTest, checkPlacePiece) {
+  TicTacToeBoard TTT;
+  bool check=false;
+  for(int i=0;i<3;i++) {
+    for(int j=0;j<3;j++) {
+      if(TTT.placePiece(i,j)== 'X' || TTT.placePiece(i,j)=='O' || TTT.placePiece(i,j)==' ')
+      {
+        check=true;
+      }
+    }
+  }
+  ASSERT_TRUE(check);
+}
