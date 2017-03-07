@@ -1,0 +1,113 @@
+        -:    0:Source:TicTacToeBoard.cpp
+        -:    0:Graph:TicTacToeBoard.gcno
+        -:    0:Data:TicTacToeBoard.gcda
+        -:    0:Runs:2
+        -:    0:Programs:2
+        -:    1:#include "TicTacToeBoard.h"
+        -:    2:/**
+        -:    3: * Class for representing a 3x3 Tic-Tac-Toe game board, using the Piece enum
+        -:    4: * to represent the spaces on the board.
+        -:    5:**/
+        -:    6:
+        -:    7://Switches turn member variable to represent whether it's X's or O's turn
+       78:    8:void TicTacToeBoard::toggleTurn()
+        -:    9:{
+       78:   10:  if( turn==O)
+       32:   11:     turn = X;
+        -:   12:  else
+       46:   13:     turn=O;
+       78:   14:}
+        -:   15:
+        -:   16://Constructor sets an empty board and specifies it is X's turn first
+       22:   17:TicTacToeBoard::TicTacToeBoard()
+        -:   18:{
+       22:   19:  turn=X;
+       88:   20:  for(int i=0;i<BOARDSIZE; i++)
+        -:   21:  {
+      264:   22:    for(int j=0;j<BOARDSIZE; j++)
+        -:   23:    {
+      198:   24:      board[i][j]=Blank;
+        -:   25:    }
+        -:   26:  }  
+       22:   27:}
+        -:   28:
+        -:   29://Resets each board location to the Blank Piece value
+        2:   30:void TicTacToeBoard::clearBoard()
+        -:   31:{
+        8:   32:  for(int i=0;i<BOARDSIZE;i++)
+        -:   33:  {
+       24:   34:    for(int j=0;j<BOARDSIZE;j++)
+        -:   35:    {
+       18:   36:     board[i][j]=Blank;
+        -:   37:    }
+        -:   38:  } 
+        2:   39:}
+        -:   40:
+        -:   41:/**
+        -:   42: * Places the piece of the current turn on the board, returns what
+        -:   43: * piece is placed, and toggles which Piece's turn it is. placePiece does 
+        -:   44: * NOT allow to place a piece in a location where there is already a piece.
+        -:   45: * In that case, placePiece just returns what is already at that location. 
+        -:   46: * Out of bounds coordinates return the Piece Invalid value
+        -:   47:**/ 
+       90:   48:Piece TicTacToeBoard::placePiece(int row, int column)
+        -:   49:{
+       90:   50:  if(board[row][column]==Blank)
+        -:   51:  {
+       78:   52:    board[row][column]=turn;
+        -:   53:    
+        -:   54:  }
+       12:   55:  else if(board[row][column]==X || board[row][column]==O)
+        -:   56:  { 
+       10:   57:    return board[row][column];
+        -:   58:  }
+       80:   59:  if(row>2 || column>2 || row < 0 || column<0)
+        -:   60:  {
+        2:   61:    return Invalid;
+        -:   62:  }
+       78:   63:  toggleTurn();
+       78:   64:  return board[row][column];
+        -:   65:}
+        -:   66:
+        -:   67:/**
+        -:   68: * Returns what piece is at the provided coordinates, or Blank if there
+        -:   69: * are no pieces there, or Invalid if the coordinates are out of bounds
+        -:   70:**/
+       18:   71:Piece TicTacToeBoard::getPiece(int row, int column)
+        -:   72:{
+       18:   73:  return board[row][column];
+        -:   74:}
+        -:   75:
+        -:   76:/**
+        -:   77: * Returns which Piece has won, if there is a winner, Invalid if the game
+        -:   78: * is not over, or Blank if the board is filled and no one has won.
+        -:   79:**/
+       16:   80:Piece TicTacToeBoard::getWinner() {
+        -:   81:    
+        -:   82:  
+       52:   83:  for(int i=0;i<BOARDSIZE;i++)
+        -:   84:  {
+       40:   85:    if(board[i][0]!=Blank && board[i][0]==board[i][1] && board[i][0]==board[i][2])
+        2:   86:       return board[i][0];
+        -:   87:    
+       38:   88:    if(board[0][i]!=Blank && board[0][i]==board[1][i] && board[0][i]==board[2][i])
+        2:   89:       return board[0][i];
+        -:   90:  }
+        -:   91:
+       12:   92:  if(board[0][0]!=Blank && board[0][0]==board[1][1] && board[0][0]==board[2][2])
+        2:   93:     return board[0][0];
+       10:   94:  else if(board[0][2]!=Blank && board[0][2]==board[1][1] && board[0][2]==board[2][0])
+        2:   95:     return board[0][2];
+        -:   96:  
+       14:   97:   for(int i=0;i<BOARDSIZE;i++)
+        -:   98:   {
+       30:   99:     for(int j=0;j<BOARDSIZE;j++)
+        -:  100:     {
+       24:  101:       if(board[i][j]==Blank)
+        6:  102:          return Invalid;
+        -:  103:     }
+        -:  104:   }
+        -:  105:
+        2:  106:  return Blank;    
+        -:  107:  
+        -:  108:}
